@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_extensions',
     'graphos',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,5 @@ STATICFILES_DIRS = [
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/dashboard'
+
+CELERY_RESULT_BACKEND = 'django-db'
