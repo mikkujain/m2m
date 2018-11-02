@@ -32,24 +32,25 @@ from datetime import date
 # 		return voltage {} level {} .format( self.volt, self.level)
 
 class Site(models.Model):
-	site_name =models.CharField(max_length=250)
+	directory = models.CharField(max_length=250)
 	folder = models.CharField(max_length=100)
 
 	def __str__(self):
-		return self.site_name	
+		return '{}/{}'.format(self.directory, self.folder)	
 
 class Files(models.Model):
-	file_name=models.ForeignKey(Site)
+	site = models.ForeignKey(Site)
+	name = models.CharField(max_length=255)
 	date = models.DateField(default=date.today)
 
 	def __str__(self):
-		return '{} {}'.format(self.file_name, self.date)
+		return '{} at {}'.format(self.name, self.date)
 
 class Data(models.Model):
-	data =models.ForeignKey(Files)
-	volt = models.FloatField()
-	level =models.FloatField()
+	file = models.ForeignKey(Files)
+	volt = models.FloatField(null=True, blank=True, default=0)
+	level = models.FloatField(null=True, blank=True, default=0)
 	datetime = models.DateTimeField()
 
 	def __str__(self):
-		return '{} {} {}'.format(self.data, self.volt, self.level)
+		return '{} {} {} at {}'.format(self.file, self.volt, self.level, self.datetime)
