@@ -19,7 +19,7 @@ class Dashboard(LoginRequiredMixin, ListView):
     model = User
     template_name = "users/dashboard.html"
 
-import csv
+# import csv
 
-with open('file_url',"r") as f:
-	reader = csv.reader(f, delimiter=',')
+# with open('file_url',"r") as f:
+# 	reader = csv.reader(f, delimiter=',')
