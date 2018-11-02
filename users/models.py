@@ -36,7 +36,10 @@ class Site(models.Model):
 	folder = models.CharField(max_length=100)
 
 	def __str__(self):
-		return '{}/{}'.format(self.directory, self.folder)	
+		return '{}/{}'.format(self.directory, self.folder)
+
+	def get_FullPath(self):
+		return '{}/{}/*'.format(self.directory, self.folder)
 
 class Files(models.Model):
 	site = models.ForeignKey(Site)
