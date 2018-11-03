@@ -34,6 +34,14 @@ def InsertData(site, file, row):
 	print("file object", fl)
 
 	if not Data.objects.filter(datetime=dt).exists():
+		try:
+			row[1] = float(row[1])
+		except:
+			row[1] = 0
+		try:
+			row[2] = float(row[2])
+		except:
+			row[2] = 0
 		dt = Data.objects.create(file=fl, volt=row[1], level=row[2], datetime=dt)
 		dt.save()
 
@@ -50,7 +58,7 @@ def ReadTagFile(s, file):
  		raise Exception('Path does not exists')
 	return csv_file
 
-@periodic_task(run_every=timedelta(seconds=30))
+@periodic_task(run_every=timedelta(seconds=20))
 def ReadFileAndStore():
 	st = Site.objects.all()
 	for s in st:

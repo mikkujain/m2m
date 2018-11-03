@@ -38,17 +38,6 @@ class Dashboard(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
 		context = super(Dashboard, self).get_context_data(**kwargs)
-		# context["data_list"] = context["data_list"].filter(datetime__year=today.year, datetime__month=today.month, datetime__day=today.day).order_by("datetime")
-		# # print(context['data_list'])
-
-		# dv = Data.objects.all()
-		# # # print(dv)
-		# context["device3"] = context["data_list"].filter(dv[0])
-		# context["device4"] = context["data_list"].filter(file__site=dv[1])
-		# context["device5"] =
-		# context["device6"] =
-		# # print("device 1 is", context)
-		#  print(context['device2'])
 
 		startd = self.request.GET.get('start-date')
 		endd   = self.request.GET.get('end-date')

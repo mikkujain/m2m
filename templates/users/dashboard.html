@@ -1,42 +1,11 @@
-<!-- {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block content %} -->
-{% load staticfiles %}
-{% load crispy_forms_tags %}
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript">
-            google.load("visualization", "1", {packages:["corechart"]});
-        </script>
-        <style type="text/css">
-            .panel-heading {
-                padding: 5px 15px;
-                color: #1E90FF;
-            }
-
-            .panel-footer {
-                padding: 1px 15px;
-                /*color: #A0A0A0;*/
-                color: #1E90FF;
-            }
-
-            .profile-img {
-                width: 96px;
-                height: 96px;
-                margin: 0 auto 10px;
-                display: block;
-                -moz-border-radius: 50%;
-                -webkit-border-radius: 50%;
-                border-radius: 50%;
-            }
-        </style>
-    </head>
-    <body id='demo' background='{% static 'img/watermark.jpg'%}' style="background-repeat: no-repeat; background-attachment: fixed; background-position: 50% 50%;">
-    {% include 'navbar.html' %}
+{% block content %}
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+</script>
     <section class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
@@ -345,9 +314,4 @@
         </div>
     </section>
 
-    {% include 'footer.html' %}
-    <script type="text/javascript" src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    </body>
-</html>
 {% endblock %}
