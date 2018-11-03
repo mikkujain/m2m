@@ -36,7 +36,7 @@ class Site(models.Model):
 	folder = models.CharField(max_length=100)
 
 	def __str__(self):
-		return '{}/{}'.format(self.directory, self.folder)
+		return '{}'.format(self.folder)
 
 	def get_FullPath(self):
 		return '{}/{}/*'.format(self.directory, self.folder)
@@ -46,8 +46,10 @@ class Files(models.Model):
 	name = models.CharField(max_length=255)
 	date = models.DateField(default=date.today)
 
+	unique_together = ('site', 'name')
+
 	def __str__(self):
-		return '{} at {}'.format(self.name, self.date)
+		return '{} {} at {}'.format(self.site, self.name, self.date)
 
 class Data(models.Model):
 	file = models.ForeignKey(Files)
@@ -55,5 +57,7 @@ class Data(models.Model):
 	level = models.FloatField(null=True, blank=True, default=0)
 	datetime = models.DateTimeField()
 
+	unique_together = ('datetime', 'volt', 'level')
+
 	def __str__(self):
-		return '{} {} {} at {}'.format(self.file, self.volt, self.level, self.datetime)
+		return '{} {} {} at {}'.format(self.file, self.volt, self.level, self.datetime.strftime("%d-%m-%Y %I:%M %p"))

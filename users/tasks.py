@@ -1,35 +1,64 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
-
-from datetime import timedelta
-
-# CELERYBEAT_SCHEDULE = {
-#     "runs-every-5-seconds": {
-#         "task": "tasks.add",
-#         "schedule": timedelta(seconds=30),
-#         "args": (16, 16)
-#     },
-# }
-
+from datetime import timedelta, date, datetime
+from celery.task import periodic_task
 import glob
 import os
-
-from celery.task import periodic_task
+import csv
 
 from .models import *
 
-def getFile(s):
-    path = s.get_FullPath()
-    print("path is", path)
-    list_of_files = glob.glob('{}.csv'.format(path)) # * means all if need specific format then *.csv
-    print("list of files", list_of_files)
-    if list_of_files != []:
-        latest_file = max(list_of_files, key=os.path.getctime)
-        return latest_file
+def readCSV(site, f):
+	print("csv file is", f)
+	with open(f, 'rb') as csvfile:
+		fl = True
+		spamreader = csv.reader(csvfile, delimiter=str(u',').encode('utf-8'), quotechar=str(u'|').encode('utf-8'))
+		for row in spamreader:
+			if fl:
+				fl = False
+				continue	
+			InsertData(site,f, row)
+
+
+def InsertData(site, file, row):
+	try:
+		dt = datetime.strptime(row[0], "%d-%m-%Y %H:%M:%S")
+	except Exception as e:
+		return e
+	if not Files.objects.filter(site=site, name=file).exists():
+		fl = Files.objects.create(site=site, name=file)
+		fl.save()
+	else:
+		fl = Files.objects.get(site=site, name=file)
+
+	print("file object", fl)
+
+	if not Data.objects.filter(datetime=dt).exists():
+		dt = Data.objects.create(file=fl, volt=row[1], level=row[2], datetime=dt)
+		dt.save()
+
+def getTodayTagFile():
+	today = date.today()
+	file = 'tag{:02d}{:02d}{}.csv'.format(today.day, today.month, today.year)
+	return file
+
+def ReadTagFile(s, file):
+	path = s.get_FullPath()
+	csv_file = '{}/{}/{}'.format(s.directory,s.folder, file)
+	print("gettng file ",csv_file)
+	if not os.path.isfile(csv_file):
+ 		raise Exception('Path does not exists')
+	return csv_file
 
 @periodic_task(run_every=timedelta(seconds=30))
 def ReadFileAndStore():
-    st = Site.objects.all()
-    for s in st:
-        f = getFile(s)
-        print("file is", f)
+	st = Site.objects.all()
+	for s in st:
+		file = getTodayTagFile()
+		try:
+			csv_file = ReadTagFile(s, file)
+		except Exception as e:
+			print(e)
+			continue
+		if csv_file:
+			row = readCSV(s, csv_file)
