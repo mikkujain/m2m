@@ -6,32 +6,8 @@ import datetime
 from django.utils.timezone import datetime
 from datetime import date
 # Create your models here.
-
-# def Site(models.Model):
-# 	site_name =models.CharField(max_length=250)
-# 	folder = models.CharField(max_length=100)
-
-# 	def __str__(self):
-# 		return self.site_name
-
-# def Files(models.Model):
-# 	file_name=models.ForeignKey(Site)
-# 	date = models.DateField(default=date.today)
-
-# 	def __str__(self):
-# 		return self.file_name
-	
-
-# def Data(models.Model):
-# 	data =models.ForeignKey(Files)
-# 	volt = models.FloatField()
-# 	level =models.FloatField()
-# 	datetime = models.DateTimeField()
-
-# 	def __str__(self):
-# 		return voltage {} level {} .format( self.volt, self.level)
-
 class Site(models.Model):
+	site_id = models.IntegerField(default=0)
 	directory = models.CharField(max_length=250)
 	folder = models.CharField(max_length=100)
 
@@ -42,7 +18,7 @@ class Site(models.Model):
 		return '{}/{}/*'.format(self.directory, self.folder)
 
 class Files(models.Model):
-	site = models.ForeignKey(Site)
+	site = models.ForeignKey(Site, on_delete=models.CASCADE)
 	name = models.CharField(max_length=255)
 	date = models.DateField(default=date.today)
 
@@ -52,7 +28,7 @@ class Files(models.Model):
 		return '{} {} at {}'.format(self.site, self.name, self.date)
 
 class Data(models.Model):
-	file = models.ForeignKey(Files)
+	file = models.ForeignKey(Files, on_delete=models.CASCADE)
 	volt = models.FloatField(null=True, blank=True, default=0)
 	level = models.FloatField(null=True, blank=True, default=0)
 	datetime = models.DateTimeField()

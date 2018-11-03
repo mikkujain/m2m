@@ -8,5 +8,4 @@ from .models import Site, Files, Data
 admin.site.register(Site)
 admin.site.register(Files)
 admin.site.register(Data)
-
 # Register your models here.
