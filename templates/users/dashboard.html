@@ -31,8 +31,8 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Time</th>
-                                    <th>Water_level</th>
                                     <th>Volt</th>
+                                    <th>Water_level</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,8 +40,8 @@
                                     <tr>
                                         <td>{{ d.datetime.date }}</td>
                                         <td>{{ d.datetime.time }}</td>
-                                        <td>{{ d.volt }}</td>
                                         <td>{{ d.level }}</td>
+                                        <td>{{ d.volt }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
