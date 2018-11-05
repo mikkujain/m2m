@@ -25,7 +25,7 @@ SECRET_KEY = '*v!ja&2afl81e9&4qgt%5hy5%9fo=p5sgbynp9f48=-rak((3o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['teleconsystems.com', '52.172.135.84']
+ALLOWED_HOSTS = ['teleconsystems.com', '52.172.135.84', '*']
 
 
 # Application definition
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

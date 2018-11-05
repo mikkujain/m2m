@@ -58,7 +58,7 @@ def ReadTagFile(s, file):
  		raise Exception('Path does not exists')
 	return csv_file
 
-@periodic_task(run_every=timedelta(seconds=20))
+@periodic_task(run_every=timedelta(minutes=30))
 def ReadFileAndStore():
 	st = Site.objects.all()
 	for s in st:
