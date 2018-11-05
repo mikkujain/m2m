@@ -15,7 +15,7 @@
                     {% endfor %}
                 {% endif %}
                 <div class="">
-                    <h3 class="text-center alert alert-info">Level Transmitter 1</h3>
+                    <h3 class="text-center alert alert-info">Water Level (NHPC Sewa II, Drabal)</h3>
                 </div>
                 <div class="chart">
                     {% if chart %}
@@ -40,8 +40,8 @@
                                     <tr>
                                         <td>{{ d.datetime.date }}</td>
                                         <td>{{ d.datetime.time }}</td>
-                                        <td>{{ d.level }}</td>
                                         <td>{{ d.volt }}</td>
+                                        <td>{{ d.level }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -163,7 +163,7 @@
                     {% endfor %}
                 {% endif %}
                 <div class="">
-                    <h3 class="text-center alert alert-info">Level Transmitter 2</h3>
+                    <h3 class="text-center alert alert-info">Water Level (NHPC Sewa II, Arwad)</h3>
                 </div>
                 <div class="chart">
                     {% if chart1 %}
