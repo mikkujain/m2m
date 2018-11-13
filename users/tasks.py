@@ -12,12 +12,15 @@ def readCSV(site, f):
 	print("csv file is", f)
 	with open(f, 'rb') as csvfile:
 		fl = True
+		l = []
 		spamreader = csv.reader(csvfile, delimiter=str(u',').encode('utf-8'), quotechar=str(u'|').encode('utf-8'))
 		for row in spamreader:
 			if fl:
 				fl = False
-				continue	
+				continue
+			l.append(row)
 			InsertData(site,f, row)
+		print("count", len(l))
 
 
 def InsertData(site, file, row):
@@ -58,7 +61,7 @@ def ReadTagFile(s, file):
  		raise Exception('Path does not exists')
 	return csv_file
 
-@periodic_task(run_every=timedelta(minutes=30))
+@periodic_task(run_every=timedelta(seconds=20))
 def ReadFileAndStore():
 	st = Site.objects.all()
 	for s in st:

@@ -35,4 +35,4 @@ class Data(models.Model):
 	unique_together = ('datetime', 'volt', 'level')
 
 	def __str__(self):
-		return '{} {} {} at {}'.format(self.file, self.volt, self.level, self.datetime.strftime("%d-%m-%Y %I:%M %p"))
+		return '{} {} at {}'.format(self.datetime.strftime("%d-%m-%Y %I:%M %p"), self.volt, self.level)
