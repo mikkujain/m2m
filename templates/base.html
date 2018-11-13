@@ -8,7 +8,7 @@
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
     </head>
-    <body>
+    <body id= 'm2m' background="{% static 'img/watermark.jpg' %}" style="background-repeat: no-repeat; background-attachment: fixed; background-position: 50% 50%;">
         {% include 'header.html' %}
         {% block content %}
         {% endblock %}

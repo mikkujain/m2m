@@ -30,10 +30,10 @@ class Dashboard(LoginRequiredMixin, ListView):
     model = (Site, Files, Data)
     template_name = "users/dashboard.html"
     login_url = '/'
+    # paginate_by = 10
 
     def get_queryset(self):
 		queryset = Data.objects.all()
-		print(queryset)
 		return queryset
 
     def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 				today = datetime.strptime(self.request.GET.get('date'), '%Y-%m-%d').date()
 				context["data_list"] = context["data_list"].filter(datetime__year=today.year, datetime__month=today.month, datetime__day=today.day).order_by("datetime")
 				dv = Site.objects.all()
-				context["device1"]   = context["data_list"].filter(file__site=dv[0])
+				context["device1"]   = context["data_list"].filter(file__site=dv[0])[:24]
 				context["device2"] 	 = context["data_list"].filter(file__site=dv[1])
 			except Exception as e:
 				context['errors'] = ["Invalid Date Format Selected"]
@@ -64,7 +64,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 			today = datetime.today()
 			context["data_list"] = context["data_list"].filter(datetime__year=today.year, datetime__month=today.month, datetime__day=today.day).order_by("datetime")
 			dv = Site.objects.all()
-			context["device1"] = context["data_list"].filter(file__site=dv[0])
+			context["device1"] = context["data_list"].filter(file__site=dv[0])[:24]
 			context["device2"] = context["data_list"].filter(file__site=dv[1])
 
 		# # print(context)
@@ -93,7 +93,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 		if context['device1']:
 			data = [['DateTime', 'Water_Level']]
 			for i in context['device1']:
-				data.append([i.datetime.strftime("%d/%m/%y %H:%I %p"), i.level])
+				data.append([i.datetime, i.volt])
 			chart = gchart.ColumnChart(SimpleDataSource(data=data), options={'title': 'NHPC_Sewa'}, height=400, width=600)
 			context["chart"] = chart
 		# return context
@@ -101,7 +101,7 @@ class Dashboard(LoginRequiredMixin, ListView):
 		if context['device2']:
 			data1 = [['DateTime','Water_Level']]
 			for i in context['device2']:
-				data1.append([i.datetime.strftime("%d/%m/%y %H:%I %p"),i.level])
+				data1.append([i.datetime,i.level])
 			chart1 = gchart.ColumnChart(SimpleDataSource(data=data1), options={'title': 'NHPC_Sewa'}, height=400, width=600)
 			context["chart1"] = chart1
 
