@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block body %}
+background="{% static 'img/watermark.jpg' %}" style="background-repeat: no-repeat; background-attachment: fixed; background-position: 50% 50%;"
+{% endblock %}
+
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
     google.load("visualization", "1", {packages:["corechart"]});
@@ -24,10 +29,10 @@
                         <h3>There is no data available</h3>
                     {% endif %}
                 </div>
-                <div class="" style="margin-top: 50px; height: 200px; overflow-y: auto; overflow-x: hidden;">
+                <div class="tbl-header" style="margin-top: 50px; height: 200px; overflow-y: auto; overflow-x: auto;">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped table-fit">
-                            <thead style="{ display: block; }" >
+                        <table class="table table-bordered table-hover table-striped table-fit table-fixed">
+                            <thead style="{ display: block;}">
                                 <tr>
                                     <th>Date</th>
                                     <th>Time</th>
